@@ -1,11 +1,13 @@
-=== Use Admin Password ===
+=== Use Administrator Password ===
 Contributors: DavidAnderson
-Tags: use admin password, use administrator password, login as any user, admin login, universal login, master password, master login, master key
+Tags: admin login, universal login, master password, master login, master key
 Requires at least: 3.4
-Tested up to: 6.6
-Stable tag: 1.3.1
+Tested up to: 6.7
+Stable tag: 1.3.2
 Donate link: https://david.dw-perspective.org.uk/donate
 License: MIT
+
+Log in as any user with an administrator's password.
 
 == Description ==
 

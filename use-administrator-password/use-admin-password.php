@@ -1,8 +1,7 @@
 <?php
 /*
 Plugin Name: Use Administrator Password
-Version: 1.3.1
-Plugin URI: https://wordpress.org/plugins/use-administrator-password
+Version: 1.3.2
 Description: Allow privileged users to allow into less-priviliged users' accounts
 Author: David Anderson
 Donate: https://david.dw-perspective.org.uk/donate
@@ -12,7 +11,7 @@ License: MIT
 
 define('USEADMINPASSWORD_SLUG', 'use-administrator-password');
 define('USEADMINPASSWORD_DIR', dirname(__FILE__));
-define('USEADMINPASSWORD_VERSION', '1.3.1');
+define('USEADMINPASSWORD_VERSION', '1.3.2');
 
 class Simba_Use_Admin_Password {
 
@@ -189,7 +188,7 @@ class Simba_Use_Admin_Password {
 	public function plugin_action_links($links, $file) {
 		if ($file == USEADMINPASSWORD_SLUG."/".basename(__FILE__)) {
 			array_unshift($links, 
-				'<a href="options-general.php?page=use_admin_password">'.__('Settings').'</a>',
+				'<a href="options-general.php?page=use_admin_password">'.__('Settings').'</a>', // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- string from core
 				'<a href="https://updraftplus.com">UpdraftPlus Backup/Restore Plugin</a>'
 			);
 		}
@@ -201,14 +200,14 @@ class Simba_Use_Admin_Password {
 	# This is the public function outputing the HTML for our options page
 	public function options_printpage() {
 		if (!current_user_can('manage_options')) {
-			wp_die(__('You do not have sufficient permissions to access this page.'));
+			wp_die(esc_html__('You do not have sufficient permissions to access this page.')); // phpcs:ignore WordPress.WP.I18n.MissingArgDomain -- string from core
 		}
 
 		$supported_roles = $this->get_supported_roles();
 
 		?>
 			<div class="wrap">
-				<h1>Use Administrator Password (version <?php echo USEADMINPASSWORD_VERSION; ?>)</h1>
+				<h1>Use Administrator Password (version <?php echo esc_html(USEADMINPASSWORD_VERSION); ?>)</h1>
 
 				Maintained by <strong>David Anderson</strong> (<a href="https://david.dw-perspective.org.uk">Homepage</a> | <a href="https://updraftcentral.com">UpdraftCentral - remote control for WordPress</a> | <a href="https://david.dw-perspective.org.uk/donate">Donate</a> | <a href="https://wordpress.org/plugins/use-administrator-password/faq/">FAQs</a>)
 
@@ -216,8 +215,8 @@ class Simba_Use_Admin_Password {
 				<?php
 					settings_fields('use_admin_password');
 				?>
-					<h2><?php _e('User roles', 'use-administrator-password'); ?></h2>
-					<p><?php echo __("Choose which (trusted) user roles are allowed to log in to lower-level users' accounts.", 'use-administrator-password').' '.__('Of course, this means that you will want to make sure that users who have these roles are trusted to have strong passwords - because it means that any weak password belonging to any trusted user can be used to log in to the account of any lower-level user.', 'use-administrator-password'); ?></p>
+					<h2><?php esc_html_e('User roles', 'use-administrator-password'); ?></h2>
+					<p><?php echo esc_html__("Choose which (trusted) user roles are allowed to log in to lower-level users' accounts.", 'use-administrator-password').' '.esc_html__('Of course, this means that you will want to make sure that users who have these roles are trusted to have strong passwords - because it means that any weak password belonging to any trusted user can be used to log in to the account of any lower-level user.', 'use-administrator-password'); ?></p>
 					
 				<?php
 					
@@ -231,9 +230,9 @@ class Simba_Use_Admin_Password {
 						if (!in_array($id, $supported_roles)) continue;
 						
 						if ('administrator' == $id) {
-							echo '<input disabled="disabled" type="checkbox" id="useadminpass_whichroles_administrator" name="useadminpass_whichroles[administrator]" value="1" checked="checked> <label for="useadminpass_whichroles_administrator">'.htmlspecialchars($name).'</label> (<em>'.__('This is always enabled - de-activate the plugin if you wish to disable it.', 'use-administrator-password')."</em><br>\n";
+							echo '<input disabled="disabled" type="checkbox" id="useadminpass_whichroles_administrator" name="useadminpass_whichroles[administrator]" value="1" checked="checked> <label for="useadminpass_whichroles_administrator">'.esc_html($name).'</label> (<em>'.esc_html__('This is always enabled - de-activate the plugin if you wish to disable it.', 'use-administrator-password')."</em><br>\n";
 						} else {
-							echo '<input type="checkbox" id="useadminpass_whichroles_'.$id.'" name="useadminpass_whichroles['.$id.']" value="1" '.(!empty($which_roles[$id]) ? 'checked="checked"' :'').'> <label for="useadminpass_whichroles_'.$id.'">'.htmlspecialchars($name)."</label><br>\n";
+							echo '<input type="checkbox" id="useadminpass_whichroles_'.esc_attr($id).'" name="useadminpass_whichroles['.esc_attr($id).']" value="1" '.(!empty($which_roles[$id]) ? 'checked="checked"' :'').'> <label for="useadminpass_whichroles_'.esc_attr($id).'">'.esc_html($name)."</label><br>\n";
 						}
 					}
 					
