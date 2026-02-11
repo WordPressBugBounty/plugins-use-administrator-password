@@ -2,7 +2,7 @@
 Contributors: DavidAnderson
 Tags: admin login, universal login, master password, master login, master key
 Requires at least: 3.4
-Tested up to: 6.8
+Tested up to: 6.9
 Stable tag: 1.3.2
 Donate link: https://david.dw-perspective.org.uk/donate
 License: MIT
